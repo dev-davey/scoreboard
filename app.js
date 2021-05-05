@@ -23,11 +23,6 @@ class App extends React.Component {
         score:0,
         name: "James",
       },
-      {
-        id: 5,
-        score:0,
-        name: "Fucky McFuckerson"
-      }
     ]
   }
 
