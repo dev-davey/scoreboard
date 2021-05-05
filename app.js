@@ -26,11 +26,27 @@ class App extends React.Component {
     ]
   }
 
+  //player id counter
+  prevPlayerId = 4;
+
   handleScoreChange = (index, delta) => {
     this.setState(prevState => {
       return {
         score: prevState.players[index].score += delta
       }
+    })
+  }
+
+  handleAddPlayer = (name) => {
+    this.setState({
+      players: [
+        ...this.state.players,
+        {
+          name: name,
+          score: 0,
+          id: this.prevPlayerId += 1
+        }
+      ]
     })
   }
 
@@ -63,6 +79,7 @@ class App extends React.Component {
           />
         )}
 
+        <AddPlayerForm addPlayer={this.handleAddPlayer}/>
       </div>
     )
   }
@@ -106,6 +123,7 @@ const Header = (props) => {
   )
 }
 
+
   const Stats = (props) => {
     
     const totalPlayers = props.players.length;
@@ -128,6 +146,41 @@ const Header = (props) => {
       </table>
 
     )
+  }
+
+  class AddPlayerForm extends React.Component {
+
+    state = {
+      value: ''
+    };
+
+    handleValueChange= (e) => {
+      this.setState({ value: e.target.value })
+    };
+
+    handleSubmit = (e) => {
+      e.preventDefault();
+      this.props.addPlayer(this.state.value);
+      this.setState({value : ''});
+    }
+
+    render(){
+      return(
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.handleValueChange}
+            placeholder="Enter a player's name"
+          />
+
+          <input 
+          type="submit"
+          value="Add Player"
+          />
+        </form>
+      )
+    }
   }
 
 
